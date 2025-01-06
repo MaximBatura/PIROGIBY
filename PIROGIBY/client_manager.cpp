@@ -3,7 +3,7 @@
 void ClientManager::addClient(int id, const std::string& name, const std::string& phoneNumber, double discount) {
     clients.emplace_back(Client{ id, name, phoneNumber, discount });
     system("cls");
-    std::cout << "Êëèåíò óñïåøíî äîáàâëåí!\n";
+    std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½!\n";
 }
 
 void ClientManager::deleteClient(int id) {
@@ -11,10 +11,10 @@ void ClientManager::deleteClient(int id) {
     int index = findClientById(id);
     if (index != -1) {
         clients.erase(clients.begin() + index);
-        std::cout << "Êëèåíò óäàëåí.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ ÑƒÐ´Ð°Ð»ÐµÐ½.\n";
     }
     else {
-        std::cout << "Êëèåíòà ñ òàêèì ID íå ñóùåñòâóåò.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚Ð° Ñ Ñ‚Ð°ÐºÐ¸Ð¼ ID Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.\n";
     }
 }
 
@@ -23,10 +23,10 @@ void ClientManager::blacklistClient(int id) {
     system("cls");
     if (index != -1 && !clients[index].isInBlacklist()) {
         clients[index].addToBlacklist();
-        std::cout << "Êëèåíò äîáàâëåí â ÷åðíûé ñïèñîê.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½ Ð² Ñ‡ÐµÑ€Ð½Ñ‹Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº.\n";
     }
     else {
-        std::cout << "Êëèåíò óæå íàõîäèòñÿ â ÷åðíîì ñïèñêå èëè íå íàéäåí.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ ÑƒÐ¶Ðµ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ Ð² Ñ‡ÐµÑ€Ð½Ð¾Ð¼ ÑÐ¿Ð¸ÑÐºÐµ Ð¸Ð»Ð¸ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½.\n";
     }
 }
 
@@ -35,10 +35,10 @@ void ClientManager::unblacklistClient(int id) {
     system("cls");
     if (index != -1 && clients[index].isInBlacklist()) {
         clients[index].removeFromBlacklist();
-        std::cout << "Êëèåíò óáðàí èç ÷åðíîãî ñïèñêà.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ ÑƒÐ±Ñ€Ð°Ð½ Ð¸Ð· Ñ‡ÐµÑ€Ð½Ð¾Ð³Ð¾ ÑÐ¿Ð¸ÑÐºÐ°.\n";
     }
     else {
-        std::cout << "Êëèåíò îòñóòñòâóåò â ÷åðíîì ñïèñêå èëè íå íàéäåí.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚ Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÐµÑ‚ Ð² Ñ‡ÐµÑ€Ð½Ð¾Ð¼ ÑÐ¿Ð¸ÑÐºÐµ Ð¸Ð»Ð¸ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½.\n";
     }
 }
 
@@ -49,10 +49,10 @@ void ClientManager::updateClientInfo(int id, const std::string& newName, const s
         clients[index].setName(newName);
         clients[index].setPhoneNumber(newPhoneNumber);
         clients[index].setDiscount(newDiscount);
-        std::cout << "Èíôîðìàöèÿ î êëèåíòå îáíîâëåíà.\n";
+        std::cout << "Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ðµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð°.\n";
     }
     else {
-        std::cout << "Êëèåíòà ñ òàêèì ID íå ñóùåñòâóåò.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚Ð° Ñ Ñ‚Ð°ÐºÐ¸Ð¼ ID Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.\n";
     }
 }
 
@@ -63,15 +63,15 @@ void ClientManager::viewClientInfo(int id) {
         printClient(clients[index]);
     }
     else {
-        std::cout << "Êëèåíòà ñ òàêèì ID íå ñóùåñòâóåò.\n";
+        std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚Ð° Ñ Ñ‚Ð°ÐºÐ¸Ð¼ ID Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.\n";
     }
 }
 
 void ClientManager::listAllClients() {
     system("cls");
-    std::cout << "Êëèåíòû:" << std::endl;
+    std::cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚Ñ‹:" << std::endl;
     if (clients.empty()) {
-        std::cout << "Íåò êëèåíòîâ." << std::endl;
+        std::cout << "ÐÐµÑ‚ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð¾Ð²." << std::endl;
         return;
     }
     for (auto client : clients) { printClient(client); }
@@ -99,7 +99,7 @@ Client* ClientManager::findClientByPhoneNumber(std::string phoneNumber)
 bool ClientManager::canChange() const {
     if (clients.size() == 0) {
         system("cls");
-        std::cout << "Äåéñòâèå íåäîñòóïíî. Ñïèñîê êëèåíòîâ ïóñò.\n";
+        std::cout << "Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð½ÐµÐ´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾. Ð¡Ð¿Ð¸ÑÐ¾Ðº ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð¾Ð² Ð¿ÑƒÑÑ‚.\n";
         return false;
     }
     else {
@@ -109,43 +109,43 @@ bool ClientManager::canChange() const {
 
 void ClientManager::printClient(Client client) {
     std::cout << "ID: " << client.getId();
-    std::cout << ", Èìÿ: " << client.getName();
-    std::cout << ", Òåëåôîí: " << client.getPhoneNumber();
-    std::cout << ", Ñêèäêà: " << client.getDiscount();
-    std::cout << ", Ñóììà çàêàçîâ: " << client.getSum();
-    std::cout << ", Ñóììà êêàëîðèé: " << client.getCalories();
+    std::cout << ", Ð˜Ð¼Ñ: " << client.getName();
+    std::cout << ", Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½: " << client.getPhoneNumber();
+    std::cout << ", Ð¡ÐºÐ¸Ð´ÐºÐ°: " << client.getDiscount();
+    std::cout << ", Ð¡ÑƒÐ¼Ð¼Ð° Ð·Ð°ÐºÐ°Ð·Ð¾Ð²: " << client.getSum();
+    std::cout << ", Ð¡ÑƒÐ¼Ð¼Ð° ÐºÐºÐ°Ð»Ð¾Ñ€Ð¸Ð¹: " << client.getCalories();
     std::cout << "\n";
 }
 
 int clientsMenu(ClientManager& manager) {
     system("cls");
     while (true) {
-        std::cout << "--- Ìåíþ êëèåíòîâ ---\n";
-        std::cout << "1. Äîáàâèòü êëèåíòà\n";
-        std::cout << "2. Óäàëèòü èíôîðìàöèþ î êëèåíòå\n";
-        std::cout << "3. Äîáàâèòü êëèåíòà â ÷åðíûé ñïèñîê\n";
-        std::cout << "4. Óáðàòü êëèåíòà èç ÷åðíîãî ñïèñêà\n";
-        std::cout << "5. Èçìåíèòü èíôîðìàöèþ î êëèåíòå\n";
-        std::cout << "6. Ïîñìîòðåòü èíôîðìàöèþ î êëèåíòå\n";
-        std::cout << "7. Ïðîñìîòð âñåõ êëèåíòîâ\n";
-        std::cout << "8. Âåðíóòüñÿ â ãëàâíîå ìåíþ\n";
-        std::cout << "Âûáåðèòå ïóíêò: ";
+        std::cout << "--- ÐœÐµÐ½ÑŽ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð¾Ð² ---\n";
+        std::cout << "1. Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°\n";
+        std::cout << "2. Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ðµ\n";
+        std::cout << "3. Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð² Ñ‡ÐµÑ€Ð½Ñ‹Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº\n";
+        std::cout << "4. Ð£Ð±Ñ€Ð°Ñ‚ÑŒ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð¸Ð· Ñ‡ÐµÑ€Ð½Ð¾Ð³Ð¾ ÑÐ¿Ð¸ÑÐºÐ°\n";
+        std::cout << "5. Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ðµ\n";
+        std::cout << "6. ÐŸÐ¾ÑÐ¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ðµ\n";
+        std::cout << "7. ÐŸÑ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ Ð²ÑÐµÑ… ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð¾Ð²\n";
+        std::cout << "8. Ð’ÐµÑ€Ð½ÑƒÑ‚ÑŒÑÑ Ð² Ð³Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ\n";
+        std::cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿ÑƒÐ½ÐºÑ‚: ";
 
         int choice = getUserChoice(1, 8);
         int id;
 
         switch (choice) {
         case 1: {
-            // Íàõîäèì ìèíèìàëüíûé äîñòóïíûé ID
+            // ÐÐ°Ñ…Ð¾Ð´Ð¸Ð¼ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ð¹ ID
             id = findNextAvailableId(manager.getClients());
 
-            std::cout << "Ââåäèòå èìÿ êëèåíòà: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°: ";
             std::string name = getUserString();
 
-            std::cout << "Ââåäèòå íîìåð òåëåôîíà êëèåíòà: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð° ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°: ";
             std::string phoneNumber = getUserString();
 
-            std::cout << "Ââåäèòå ñêèäêó êëèåíòà (%): ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐºÐ¸Ð´ÐºÑƒ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° (%): ";
             int discount = getUserChoice(0, 100);
 
             manager.addClient(id, name, phoneNumber, discount);
@@ -154,7 +154,7 @@ int clientsMenu(ClientManager& manager) {
         case 2: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Ââåäèòå ID êëèåíòà äëÿ óäàëåíèÿ: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ: ";
             id = getId(manager.getClients());
 
             manager.deleteClient(id);
@@ -163,14 +163,14 @@ int clientsMenu(ClientManager& manager) {
         case 3: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Ââåäèòå ID êëèåíòà äëÿ äîáàâëåíèÿ â ÷åðíûé ñïèñîê: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð´Ð»Ñ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð² Ñ‡ÐµÑ€Ð½Ñ‹Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº: ";
             id = getId(manager.getClients());
             manager.blacklistClient(id);
             break;
         case 4: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Ââåäèòå ID êëèåíòà äëÿ óäàëåíèÿ èç ÷åðíîãî ñïèñêà: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¸Ð· Ñ‡ÐµÑ€Ð½Ð¾Ð³Ð¾ ÑÐ¿Ð¸ÑÐºÐ°: ";
             id = getId(manager.getClients());
 
             manager.unblacklistClient(id);
@@ -179,16 +179,16 @@ int clientsMenu(ClientManager& manager) {
         case 5: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Ââåäèòå ID êëèåíòà äëÿ èçìåíåíèÿ èíôîðìàöèè: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð´Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸: ";
             id = getId(manager.getClients());
 
-            std::cout << "Ââåäèòå íîâîå èìÿ êëèåíòà: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð¸Ð¼Ñ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°: ";
             std::string newName = getUserString();
 
-            std::cout << "Ââåäèòå íîâûé íîìåð òåëåôîíà êëèåíòà: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ñ‹Ð¹ Ð½Ð¾Ð¼ÐµÑ€ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð° ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°: ";
             std::string newPhoneNumber = getUserString();
 
-            std::cout << "Ââåäèòå íîâóþ ñêèäêó êëèåíòà (%): ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²ÑƒÑŽ ÑÐºÐ¸Ð´ÐºÑƒ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° (%): ";
             int newDiscount = getUserChoice(0, 100);
 
             manager.updateClientInfo(id, newName, newPhoneNumber, newDiscount);
@@ -197,7 +197,7 @@ int clientsMenu(ClientManager& manager) {
         case 6: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Ââåäèòå ID êëèåíòà äëÿ ïðîñìîòðà èíôîðìàöèè: ";
+            std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ID ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° Ð´Ð»Ñ Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€Ð° Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸: ";
             id = getId(manager.getClients());
 
             manager.viewClientInfo(id);
@@ -209,7 +209,7 @@ int clientsMenu(ClientManager& manager) {
         case 8:
             return 0;
         default:
-            std::cout << "Íåïðàâèëüíûé âûáîð. Ïîïðîáóéòå ñíîâà.\n";
+            std::cout << "ÐÐµÐ¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ñ‹Ð¹ Ð²Ñ‹Ð±Ð¾Ñ€. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÑÐ½Ð¾Ð²Ð°.\n";
         }
         }
     }
