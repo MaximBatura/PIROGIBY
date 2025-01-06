@@ -6,33 +6,33 @@
 void WorkersManager::addWorker() {
     int id = findNextAvailableId(workers);
 
-    std::cout << "Введите имя работника: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ СЂР°Р±РѕС‚РЅРёРєР°: ";
     std::string name = getUserString();
 
-    std::cout << "Введите должность работника: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РґРѕР»Р¶РЅРѕСЃС‚СЊ СЂР°Р±РѕС‚РЅРёРєР°: ";
     std::string position = getUserString();
 
-    // Динамическое создание нового объекта Worker
+    // Р”РёРЅР°РјРёС‡РµСЃРєРѕРµ СЃРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° Worker
     Worker* newWorker = new Worker(id, name, position);
     workers.push_back(newWorker);
     system("cls");
 
-    std::cout << "Информация о работнике добавлена.\n";
+    std::cout << "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЂР°Р±РѕС‚РЅРёРєРµ РґРѕР±Р°РІР»РµРЅР°.\n";
 }
 
 void WorkersManager::deleteWorker() {
     if (!canChange()) { return; }
     // bool found = false;
 
-    std::cout << "Введите ID работника, которого хотите удалить: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ ID СЂР°Р±РѕС‚РЅРёРєР°, РєРѕС‚РѕСЂРѕРіРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ: ";
     int id_to_delete = getId(workers);
     Worker* worker_to_delete = findWorkerById(id_to_delete);
-    // Теперь находим итератор на элемент, соответствующий этому указателю
+    // РўРµРїРµСЂСЊ РЅР°С…РѕРґРёРј РёС‚РµСЂР°С‚РѕСЂ РЅР° СЌР»РµРјРµРЅС‚, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СЌС‚РѕРјСѓ СѓРєР°Р·Р°С‚РµР»СЋ
     auto it = std::find(workers.begin(), workers.end(), worker_to_delete);
     workers.erase(it);
 
     system("cls");
-    std::cout << "Работник удален.\n";
+    std::cout << "Р Р°Р±РѕС‚РЅРёРє СѓРґР°Р»РµРЅ.\n";
 
 
     /*for (auto it = workers.begin(); it != workers.end(); ++it) {
@@ -44,42 +44,42 @@ void WorkersManager::deleteWorker() {
     }*/
     /*system("cls");
     if (found) {
-        std::cout << "Работник удален.\n";
+        std::cout << "Р Р°Р±РѕС‚РЅРёРє СѓРґР°Р»РµРЅ.\n";
     }
     else {
-        std::cout << "Работника с таким ID не найдено.\n";
+        std::cout << "Р Р°Р±РѕС‚РЅРёРєР° СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅРѕ.\n";
     }*/
 }
 
 void WorkersManager::updateWorker() {
     if (!canChange()) { return; }
 
-    std::cout << "Введите ID работника, информацию о котором хотите изменить: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ ID СЂР°Р±РѕС‚РЅРёРєР°, РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕС‚РѕСЂРѕРј С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ: ";
     int id_to_update = getId(workers);
 
     for (auto& worker : workers) {
         if (worker->getId() == id_to_update) {
-            std::cout << "Введите новое имя работника: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РёРјСЏ СЂР°Р±РѕС‚РЅРёРєР°: ";
             std::string new_name = getUserString();
 
-            std::cout << "Введите новую должность работника: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ РґРѕР»Р¶РЅРѕСЃС‚СЊ СЂР°Р±РѕС‚РЅРёРєР°: ";
             std::string new_position = getUserString();
 
             worker->setName(new_name);
             worker->setPosition(new_position);
             system("cls");
-            std::cout << "Информация о работнике обновлена.\n";
+            std::cout << "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЂР°Р±РѕС‚РЅРёРєРµ РѕР±РЅРѕРІР»РµРЅР°.\n";
             return;
         }
     }
 
-    std::cout << "Работника с таким ID не найдено.\n";
+    std::cout << "Р Р°Р±РѕС‚РЅРёРєР° СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅРѕ.\n";
 }
 
 void WorkersManager::findWorkerByAttribute() {
     if (!canChange()) { return; }
     
-    std::cout << "Введите значение атрибута для поиска (имя или должность): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ Р°С‚СЂРёР±СѓС‚Р° РґР»СЏ РїРѕРёСЃРєР° (РёРјСЏ РёР»Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ): ";
     std::string attribute_value = getUserString();
     system("cls");
     bool found = false;
@@ -87,14 +87,14 @@ void WorkersManager::findWorkerByAttribute() {
         if (worker->getName().find(attribute_value) != std::string::npos ||
             worker->getPosition().find(attribute_value) != std::string::npos) {
             std::cout << "ID: " << worker->getId()
-                << ", Имя: " << worker->getName()
-                << ", Должность: " << worker->getPosition() << '\n';
+                << ", РРјСЏ: " << worker->getName()
+                << ", Р”РѕР»Р¶РЅРѕСЃС‚СЊ: " << worker->getPosition() << '\n';
             found = true;
         }
     }
 
     if (!found) {
-        std::cout << "Работники с указанным значением атрибута не найдены.\n";
+        std::cout << "Р Р°Р±РѕС‚РЅРёРєРё СЃ СѓРєР°Р·Р°РЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј Р°С‚СЂРёР±СѓС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹.\n";
     }
 }
 
@@ -108,7 +108,7 @@ Worker* WorkersManager::findWorkerById(int id) {
     }
 
     if (!found) {
-        std::cout << "Работники с указанным значением атрибута не найдены.\n";
+        std::cout << "Р Р°Р±РѕС‚РЅРёРєРё СЃ СѓРєР°Р·Р°РЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј Р°С‚СЂРёР±СѓС‚Р° РЅРµ РЅР°Р№РґРµРЅС‹.\n";
     }
 }
 
@@ -116,16 +116,16 @@ Worker* WorkersManager::findWorkerById(int id) {
 void WorkersManager::displayAllWorkers() {
     system("cls");
     if (workers.empty()) {
-        std::cout << "Список работников пуст.\n";
+        std::cout << "РЎРїРёСЃРѕРє СЂР°Р±РѕС‚РЅРёРєРѕРІ РїСѓСЃС‚.\n";
     }
     else {
         for (auto worker : workers) {
             std::cout << "ID: " << worker->getId();
-            std::cout << ", Имя: " << worker->getName();
-            std::cout << ", Должность: " << worker->getPosition();
-            std::cout << ", Количество принятых заказов: " << worker->getAcceptedOrders();
-            std::cout << ", Количество приготовленых заказов: " << worker->getCookedOrders();
-            std::cout << ", График работы: ";
+            std::cout << ", РРјСЏ: " << worker->getName();
+            std::cout << ", Р”РѕР»Р¶РЅРѕСЃС‚СЊ: " << worker->getPosition();
+            std::cout << ", РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРёРЅСЏС‚С‹С… Р·Р°РєР°Р·РѕРІ: " << worker->getAcceptedOrders();
+            std::cout << ", РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРёРіРѕС‚РѕРІР»РµРЅС‹С… Р·Р°РєР°Р·РѕРІ: " << worker->getCookedOrders();
+            std::cout << ", Р“СЂР°С„РёРє СЂР°Р±РѕС‚С‹: ";
             std::vector<int> workingHoursPerWeek = worker->getWorkingHours();
             for (int i = 0; i < workingHoursPerWeek.size(); i++) {
                 std::cout << i << ": " << workingHoursPerWeek[i] << ", ";
@@ -139,7 +139,7 @@ bool WorkersManager::canChange() const
 {
     if (workers.size() == 0) {
         system("cls");
-        std::cout << "Действие недоступно. Список работников пуст.\n";
+        std::cout << "Р”РµР№СЃС‚РІРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ. РЎРїРёСЃРѕРє СЂР°Р±РѕС‚РЅРёРєРѕРІ РїСѓСЃС‚.\n";
         return false;
     }
     else {
@@ -150,13 +150,13 @@ bool WorkersManager::canChange() const
 void WorkersManager::showCurrentSchedule()
 {
     system("cls");
-    std::vector<std::string> days = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+    std::vector<std::string> days = { "РџРѕРЅРµРґРµР»СЊРЅРёРє", "Р’С‚РѕСЂРЅРёРє", "РЎСЂРµРґР°", "Р§РµС‚РІРµСЂРі", "РџСЏС‚РЅРёС†Р°", "РЎСѓР±Р±РѕС‚Р°", "Р’РѕСЃРєСЂРµСЃРµРЅСЊРµ" };
 
     for (int i = 0; i < days.size(); i++) {
         std::cout << days[i] << ": ";
         for (auto worker : workers) {
             if ((worker->getWorkingHours())[i] > 0) {
-                std::cout << worker->getName() << "(" << worker->getId() << "): " << worker->getWorkingHours()[i] << " часов, ";
+                std::cout << worker->getName() << "(" << worker->getId() << "): " << worker->getWorkingHours()[i] << " С‡Р°СЃРѕРІ, ";
             }
         }
     }
@@ -169,27 +169,27 @@ void WorkersManager::createNewSchedule()
     if (!canChange()) { return; }
 
     displayAllWorkers();
-    std::cout << "\nВведите ID работника, которому хотите установить график работы: ";
+    std::cout << "\nР’РІРµРґРёС‚Рµ ID СЂР°Р±РѕС‚РЅРёРєР°, РєРѕС‚РѕСЂРѕРјСѓ С…РѕС‚РёС‚Рµ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РіСЂР°С„РёРє СЂР°Р±РѕС‚С‹: ";
     int workerId = getId(workers);
 
     for (auto& worker : workers) {
         if (worker->getId() == workerId) {
-            std::cout << "Работник найден\n";
-            for (int i = 0; i < 7; i++) { worker->setWorkingHours(i, 0); } // Очистка старого графика
+            std::cout << "Р Р°Р±РѕС‚РЅРёРє РЅР°Р№РґРµРЅ\n";
+            for (int i = 0; i < 7; i++) { worker->setWorkingHours(i, 0); } // РћС‡РёСЃС‚РєР° СЃС‚Р°СЂРѕРіРѕ РіСЂР°С„РёРєР°
 
-            // Заполнение нового графика
+            // Р—Р°РїРѕР»РЅРµРЅРёРµ РЅРѕРІРѕРіРѕ РіСЂР°С„РёРєР°
             for (int i = 0; i < 7; ++i) {
-                std::cout << "Введите количество часов работы для дня " << i + 1 << ": ";
+                std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‡Р°СЃРѕРІ СЂР°Р±РѕС‚С‹ РґР»СЏ РґРЅСЏ " << i + 1 << ": ";
                 int hours = getUserChoice(0, 12);
                 worker->setWorkingHours(i, hours);
             }
             system("cls");
-            std::cout << "Новый график работы успешно создан!" << std::endl;
+            std::cout << "РќРѕРІС‹Р№ РіСЂР°С„РёРє СЂР°Р±РѕС‚С‹ СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ!" << std::endl;
             return;
         }
     }
 
-    std::cout << "Работник с таким ID не найден." << std::endl;
+    std::cout << "Р Р°Р±РѕС‚РЅРёРє СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
 
 }
 
@@ -198,16 +198,16 @@ int workerMenu(WorkersManager* manager) {
     int choice;
 
     while (true) {
-        std::cout << "--- Меню работников ---\n";
-        std::cout << "1. Добавить информацию о работнике\n";
-        std::cout << "2. Удалить информацию о работнике\n";
-        std::cout << "3. Изменить информацию о работнике\n";
-        std::cout << "4. Найти работника по атрибуту\n";
-        std::cout << "5. Просмотреть всех работников\n";
-        std::cout << "6. Текущий график работы\n";
-        std::cout << "7. Создать новый график работы\n";
-        std::cout << "8. Вернуться в главное меню\n";
-        std::cout << "Выберите пункт: ";
+        std::cout << "--- РњРµРЅСЋ СЂР°Р±РѕС‚РЅРёРєРѕРІ ---\n";
+        std::cout << "1. Р”РѕР±Р°РІРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂР°Р±РѕС‚РЅРёРєРµ\n";
+        std::cout << "2. РЈРґР°Р»РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂР°Р±РѕС‚РЅРёРєРµ\n";
+        std::cout << "3. РР·РјРµРЅРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂР°Р±РѕС‚РЅРёРєРµ\n";
+        std::cout << "4. РќР°Р№С‚Рё СЂР°Р±РѕС‚РЅРёРєР° РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ\n";
+        std::cout << "5. РџСЂРѕСЃРјРѕС‚СЂРµС‚СЊ РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ\n";
+        std::cout << "6. РўРµРєСѓС‰РёР№ РіСЂР°С„РёРє СЂР°Р±РѕС‚С‹\n";
+        std::cout << "7. РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ РіСЂР°С„РёРє СЂР°Р±РѕС‚С‹\n";
+        std::cout << "8. Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РїСѓРЅРєС‚: ";
         choice = getUserChoice(1, 8);
 
         switch (choice) {
@@ -235,7 +235,7 @@ int workerMenu(WorkersManager* manager) {
         case 8:
             return 0;
         default:
-            std::cout << "Неверный ввод. Попробуйте еще раз.\n";
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.\n";
             break;
         }
     }

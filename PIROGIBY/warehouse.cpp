@@ -3,12 +3,12 @@
 void warehouseMenu(IngredientsManager& ingredientsManager) {
     system("cls");
     while (true) {
-        std::cout << "--- Меню учета ингредиентов ---\n";
-        std::cout << "1. Создать поставку\n";
-        std::cout << "2. Продукты, у которых скоро закончится срок годности\n";
-        std::cout << "3. Остатки на складе\n";
-        std::cout << "4. Вернуться в главное меню\n";
-        std::cout << "Выберите пункт: ";
+        std::cout << "--- РњРµРЅСЋ СѓС‡РµС‚Р° РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ ---\n";
+        std::cout << "1. РЎРѕР·РґР°С‚СЊ РїРѕСЃС‚Р°РІРєСѓ\n";
+        std::cout << "2. РџСЂРѕРґСѓРєС‚С‹, Сѓ РєРѕС‚РѕСЂС‹С… СЃРєРѕСЂРѕ Р·Р°РєРѕРЅС‡РёС‚СЃСЏ СЃСЂРѕРє РіРѕРґРЅРѕСЃС‚Рё\n";
+        std::cout << "3. РћСЃС‚Р°С‚РєРё РЅР° СЃРєР»Р°РґРµ\n";
+        std::cout << "4. Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РїСѓРЅРєС‚: ";
 
         int grams;
         int pricePerUnit;
@@ -17,32 +17,32 @@ void warehouseMenu(IngredientsManager& ingredientsManager) {
         case 1: {
             if (!ingredientsManager.canChange()) { return; }
             ingredientsManager.displayAllIngredients();
-            std::cout << "Введите id ингредиента, чтобы добавить его на склад: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ id РёРЅРіСЂРµРґРёРµРЅС‚Р°, С‡С‚РѕР±С‹ РґРѕР±Р°РІРёС‚СЊ РµРіРѕ РЅР° СЃРєР»Р°Рґ: ";
             int id = getId(ingredientsManager.getIngredients());
             Ingredient* ingr = ingredientsManager.getIngredientPtrById(id);
 
-            if (ingr->getUnit() == "грамм") {
-                std::cout << "Введите количество (грамм) ингредиента для добавления на склад: ";
+            if (ingr->getUnit() == "РіСЂР°РјРј") {
+                std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ (РіСЂР°РјРј) РёРЅРіСЂРµРґРёРµРЅС‚Р° РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РЅР° СЃРєР»Р°Рґ: ";
                 grams = getUserChoice(0, 1000000);
 
-                std::cout << "Введите цену за единицу (за грамм): ";
+                std::cout << "Р’РІРµРґРёС‚Рµ С†РµРЅСѓ Р·Р° РµРґРёРЅРёС†Сѓ (Р·Р° РіСЂР°РјРј): ";
                 pricePerUnit = getUserChoice(0, 1000000);
             }
             else {
-                std::cout << "Введите количество (штук) ингредиента для добавления на склад: ";
+                std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ (С€С‚СѓРє) РёРЅРіСЂРµРґРёРµРЅС‚Р° РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РЅР° СЃРєР»Р°Рґ: ";
                 grams = getUserChoice(0, 1000000);
 
-                std::cout << "Введите цену за единицу (за штуку): ";
+                std::cout << "Р’РІРµРґРёС‚Рµ С†РµРЅСѓ Р·Р° РµРґРёРЅРёС†Сѓ (Р·Р° С€С‚СѓРєСѓ): ";
                 pricePerUnit = getUserChoice(0, 1000000);
             }
 
-            std::cout << "Введите срок годности ингредиента (ДД.ММ.ГГГГ): ";
+            std::cout << "Р’РІРµРґРёС‚Рµ СЃСЂРѕРє РіРѕРґРЅРѕСЃС‚Рё РёРЅРіСЂРµРґРёРµРЅС‚Р° (Р”Р”.РњРњ.Р“Р“Р“Р“): ";
             std::string expirationDate = getUserString(10);
             while (true) {
                 if (isValidDate(expirationDate)) {
                     break;
                 }
-                std::cout << "Попробуйте еще раз (ДД.ММ.ГГГГ, например 05.01.2025): ";
+                std::cout << "РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р· (Р”Р”.РњРњ.Р“Р“Р“Р“, РЅР°РїСЂРёРјРµСЂ 05.01.2025): ";
                 expirationDate = getUserString(10);
             }
 
@@ -50,7 +50,7 @@ void warehouseMenu(IngredientsManager& ingredientsManager) {
             ingr->addBatch(newBatch);
                
             system("cls");
-            std::cout << "Поставка оформлена\n";
+            std::cout << "РџРѕСЃС‚Р°РІРєР° РѕС„РѕСЂРјР»РµРЅР°\n";
             break;
         }
         case 2: {
@@ -58,11 +58,11 @@ void warehouseMenu(IngredientsManager& ingredientsManager) {
             for (auto ingredient : ingredientsManager.getIngredients()) {
                 for (auto batch : ingredient.getBatches()) {
                     if (isDateMoreThanAWeekAway(batch.getExpirationDate())) {
-                        if (ingredient.getUnit() == "грамм") {
-                            std::cout << "У продукта " << ingredient.getName() << " " << batch.getQuantity() << " грамм скоро (" << batch.getExpirationDate() << ") испортятся.\n";
+                        if (ingredient.getUnit() == "РіСЂР°РјРј") {
+                            std::cout << "РЈ РїСЂРѕРґСѓРєС‚Р° " << ingredient.getName() << " " << batch.getQuantity() << " РіСЂР°РјРј СЃРєРѕСЂРѕ (" << batch.getExpirationDate() << ") РёСЃРїРѕСЂС‚СЏС‚СЃСЏ.\n";
                         }
                         else {
-                            std::cout << "У продукта " << ingredient.getName() << " " << batch.getQuantity() << " штук скоро (" << batch.getExpirationDate() << ") испортятся.\n";
+                            std::cout << "РЈ РїСЂРѕРґСѓРєС‚Р° " << ingredient.getName() << " " << batch.getQuantity() << " С€С‚СѓРє СЃРєРѕСЂРѕ (" << batch.getExpirationDate() << ") РёСЃРїРѕСЂС‚СЏС‚СЃСЏ.\n";
                         }
                         
                     }
@@ -79,11 +79,11 @@ void warehouseMenu(IngredientsManager& ingredientsManager) {
                     stock += batch.getQuantity();
                 }
                 if (stock != 0) {
-                    if (ingredient.getUnit() == "грамм") {
-                        std::cout << ingredient.getName() << ": " << stock << " грамм\n";
+                    if (ingredient.getUnit() == "РіСЂР°РјРј") {
+                        std::cout << ingredient.getName() << ": " << stock << " РіСЂР°РјРј\n";
                     }
                     else {
-                        std::cout << ingredient.getName() << ": " << stock << " штук\n";
+                        std::cout << ingredient.getName() << ": " << stock << " С€С‚СѓРє\n";
                     }
                 }
             }
@@ -92,7 +92,7 @@ void warehouseMenu(IngredientsManager& ingredientsManager) {
         case 4:
             return;
         default:
-            std::cout << "Неверный выбор. Попробуйте снова." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << std::endl;
         }
     }
 }

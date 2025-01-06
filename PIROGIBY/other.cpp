@@ -1,5 +1,5 @@
 #include <string>
-#include <cctype> // Для функции isdigit()
+#include <cctype> // Р”Р»СЏ С„СѓРЅРєС†РёРё isdigit()
 #include <limits>
 #include <iostream>
 #include <iomanip>
@@ -19,12 +19,12 @@ protected:
 public:
     explicit BaseClass(int id = 0) : id(id) {}
 
-    virtual ~BaseClass() {} // Виртуальный деструктор для полиморфизма
+    virtual ~BaseClass() {} // Р’РёСЂС‚СѓР°Р»СЊРЅС‹Р№ РґРµСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РїРѕР»РёРјРѕСЂС„РёР·РјР°
 
     int getId() const { return id; }
 };
 
-// Функция для проверки, состоит ли строка только из цифр
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё, СЃРѕСЃС‚РѕРёС‚ Р»Рё СЃС‚СЂРѕРєР° С‚РѕР»СЊРєРѕ РёР· С†РёС„СЂ
 bool isNumber(const std::string& str) {
     return std::all_of(str.begin(), str.end(), ::isdigit);
 }
@@ -34,7 +34,7 @@ int stringToInt(const std::string& str) {
         return std::stoi(str);
     }
     catch (const std::exception&) {
-        throw std::runtime_error("Невозможно преобразовать строку в число.");
+        throw std::runtime_error("РќРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ.");
     }
 }
 
@@ -52,17 +52,17 @@ std::string removeNewLines(const std::string& input) {
     return output;
 }
 
-// Функция для поиска минимального свободного id в массиве объектов
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЃРІРѕР±РѕРґРЅРѕРіРѕ id РІ РјР°СЃСЃРёРІРµ РѕР±СЉРµРєС‚РѕРІ
 template<typename T>
 int findNextAvailableId(const std::vector<T>& objects) {
 
-    // Создаем множество для хранения всех существующих id
+    // РЎРѕР·РґР°РµРј РјРЅРѕР¶РµСЃС‚РІРѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РІСЃРµС… СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС… id
     std::vector<int> usedIds;
     for (const auto& obj : objects) {
         usedIds.push_back(obj.getId());
     }
 
-    // Сортируем массив для бинарного поиска
+    // РЎРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ РґР»СЏ Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР°
     std::sort(usedIds.begin(), usedIds.end());
 
     int nextId = 0;
@@ -73,17 +73,17 @@ int findNextAvailableId(const std::vector<T>& objects) {
     return nextId;
 }
 
-// Функция для поиска минимального свободного id в массиве указателей на объекты
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЃРІРѕР±РѕРґРЅРѕРіРѕ id РІ РјР°СЃСЃРёРІРµ СѓРєР°Р·Р°С‚РµР»РµР№ РЅР° РѕР±СЉРµРєС‚С‹
 template<typename T>
 int findNextAvailableId(const std::vector<T*>& pointers) {
 
-    // Создаем множество для хранения всех существующих id
+    // РЎРѕР·РґР°РµРј РјРЅРѕР¶РµСЃС‚РІРѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РІСЃРµС… СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС… id
     std::vector<int> usedIds;
     for (const auto& ptr : pointers) {
         usedIds.push_back(ptr->getId());
     }
 
-    // Сортируем массив для бинарного поиска
+    // РЎРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ РґР»СЏ Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР°
     std::sort(usedIds.begin(), usedIds.end());
 
     int nextId = 0;
@@ -95,25 +95,25 @@ int findNextAvailableId(const std::vector<T*>& pointers) {
 }
 
 void clearInputBuffer() {
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаем буфер ввода
-    std::cin.clear(); // Сбрасываем флаги ошибок
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // РћС‡РёС‰Р°РµРј Р±СѓС„РµСЂ РІРІРѕРґР°
+    std::cin.clear(); // РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°РіРё РѕС€РёР±РѕРє
 }
 
 
 int getUserChoice(int min, int max) {
     int choice;
     while (true) {
-        if (std::cin >> choice) {  // Если удалось прочитать целое число
+        if (std::cin >> choice) {  // Р•СЃР»Рё СѓРґР°Р»РѕСЃСЊ РїСЂРѕС‡РёС‚Р°С‚СЊ С†РµР»РѕРµ С‡РёСЃР»Рѕ
             if (choice >= min && choice <= max) {
-                clearInputBuffer();  // Очищаем буфер ввода
+                clearInputBuffer();  // РћС‡РёС‰Р°РµРј Р±СѓС„РµСЂ РІРІРѕРґР°
                 return choice;
             }
-            std::cout << "Некорректный ввод. Повторите попытку: ";
+            std::cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ. РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ: ";
         }
         else {
-            std::cin.clear();  // Сбрасываем флаги ошибок
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Удаляем все символы до конца строки
-            std::cout << "Ошибка ввода. Вводите цифры: ";
+            std::cin.clear();  // РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°РіРё РѕС€РёР±РѕРє
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // РЈРґР°Р»СЏРµРј РІСЃРµ СЃРёРјРІРѕР»С‹ РґРѕ РєРѕРЅС†Р° СЃС‚СЂРѕРєРё
+            std::cout << "РћС€РёР±РєР° РІРІРѕРґР°. Р’РІРѕРґРёС‚Рµ С†РёС„СЂС‹: ";
         }
     }
 }
@@ -124,14 +124,14 @@ std::string getUserString(int minLength = MAX_STRING_LENGTH) {
 
         std::getline(std::cin, str);
         if (str.empty()) {
-            std::cout << "Пустая строка. Повторите попытку: ";
+            std::cout << "РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ: ";
             continue;
         }
 
         if (str.length() <= MAX_STRING_LENGTH) {
             return str;
         }
-        std::cout << "Максимальная длина строки - " << MAX_STRING_LENGTH << " символов.Повторите попытку : ";
+        std::cout << "РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° СЃС‚СЂРѕРєРё - " << MAX_STRING_LENGTH << " СЃРёРјРІРѕР»РѕРІ.РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ : ";
 
     }
 }
@@ -151,7 +151,7 @@ int getId(const std::vector<T>& objects) {
             return iterator->getId();
         }
         else {
-            std::cout << "Объекта с таким id не существует. Попробуйте еще раз: ";
+            std::cout << "РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·: ";
         }
     }
 }
@@ -171,7 +171,7 @@ int getId(const std::vector<T*>& objects) {
             return (*iterator)->getId();
         }
         else {
-            std::cout << "Объекта с таким id не существует. Попробуйте еще раз: ";
+            std::cout << "РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·: ";
         }
     }
 }
@@ -206,7 +206,7 @@ bool checkId(const std::vector<T*>& objects, int targetId) {
     }
 }
 
-// Функция для получения текущей даты в формате "ДД.ММ.ГГГГ"
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ С‚РµРєСѓС‰РµР№ РґР°С‚С‹ РІ С„РѕСЂРјР°С‚Рµ "Р”Р”.РњРњ.Р“Р“Р“Р“"
 std::string getCurrentDateString()
 {
     auto now = std::chrono::system_clock::now();
@@ -217,59 +217,59 @@ std::string getCurrentDateString()
     return std::string(buffer);
 }
 
-// Функция для преобразования строки в объект time_point
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ СЃС‚СЂРѕРєРё РІ РѕР±СЉРµРєС‚ time_point
 std::chrono::system_clock::time_point parseDate(const std::string& dateStr)
 {
     std::tm t = {};
     std::istringstream ss(dateStr);
 
-    // Форматируем строку даты для чтения
+    // Р¤РѕСЂРјР°С‚РёСЂСѓРµРј СЃС‚СЂРѕРєСѓ РґР°С‚С‹ РґР»СЏ С‡С‚РµРЅРёСЏ
     ss >> std::get_time(&t, "%d.%m.%Y");
 
     if (ss.fail()) {
         throw std::runtime_error("Invalid date format");
     }
 
-    // Преобразуем структуру tm в объект time_point
+    // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ tm РІ РѕР±СЉРµРєС‚ time_point
     std::time_t tt = std::mktime(&t);
     return std::chrono::system_clock::from_time_t(tt);
 }
 
-// Функция для проверки, наступит ли дата через неделю или позже
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё, РЅР°СЃС‚СѓРїРёС‚ Р»Рё РґР°С‚Р° С‡РµСЂРµР· РЅРµРґРµР»СЋ РёР»Рё РїРѕР·Р¶Рµ
 bool isDateMoreThanAWeekAway(const std::string& dateStr)
 {
     using namespace std::chrono_literals;
 
-    // Текущая дата + 7 дней
+    // РўРµРєСѓС‰Р°СЏ РґР°С‚Р° + 7 РґРЅРµР№
     auto now = std::chrono::system_clock::now();
     auto oneWeekLater = now + 7 * 24h;
 
-    // Парсим введённую дату
+    // РџР°СЂСЃРёРј РІРІРµРґС‘РЅРЅСѓСЋ РґР°С‚Сѓ
     auto parsedDate = parseDate(dateStr);
 
-    // Сравниваем даты
+    // РЎСЂР°РІРЅРёРІР°РµРј РґР°С‚С‹
     return parsedDate <= oneWeekLater;
 }
 
 bool isValidDate(const std::string& dateStr)
 {
-    // Регулярное выражение для проверки формата ДД.ММ.ГГГГ
+    // Р РµРіСѓР»СЏСЂРЅРѕРµ РІС‹СЂР°Р¶РµРЅРёРµ РґР»СЏ РїСЂРѕРІРµСЂРєРё С„РѕСЂРјР°С‚Р° Р”Р”.РњРњ.Р“Р“Р“Р“
     const std::regex dateRegex(R"(^([0-9]{2})\.([0-9]{2})\.([0-9]{4})$)");
 
-    // Проверяем строку на соответствие регулярному выражению
+    // РџСЂРѕРІРµСЂСЏРµРј СЃС‚СЂРѕРєСѓ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂРµРіСѓР»СЏСЂРЅРѕРјСѓ РІС‹СЂР°Р¶РµРЅРёСЋ
     if (!std::regex_match(dateStr, dateRegex))
         return false;
 
-    // Извлекаем компоненты даты
+    // РР·РІР»РµРєР°РµРј РєРѕРјРїРѕРЅРµРЅС‚С‹ РґР°С‚С‹
     int day = std::stoi(dateStr.substr(0, 2));
     int month = std::stoi(dateStr.substr(3, 2));
     int year = std::stoi(dateStr.substr(6, 4));
 
-    // Проверка диапазонов значений дня, месяца и года
+    // РџСЂРѕРІРµСЂРєР° РґРёР°РїР°Р·РѕРЅРѕРІ Р·РЅР°С‡РµРЅРёР№ РґРЅСЏ, РјРµСЃСЏС†Р° Рё РіРѕРґР°
     if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100)
         return false;
 
-    // Дополнительная проверка на количество дней в месяце
+    // Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР° РЅР° РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РІ РјРµСЃСЏС†Рµ
     bool isLeapYear = ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
     switch (month)
     {
@@ -285,7 +285,7 @@ bool isValidDate(const std::string& dateStr)
     }
 }
 
-// Функция для поиска указателя на объект с ближайшей датой истечения срока
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° СѓРєР°Р·Р°С‚РµР»СЏ РЅР° РѕР±СЉРµРєС‚ СЃ Р±Р»РёР¶Р°Р№С€РµР№ РґР°С‚РѕР№ РёСЃС‚РµС‡РµРЅРёСЏ СЃСЂРѕРєР°
 Batch* findNearestExpirationDate(std::vector<Batch>* selectedBatchesPtr)
 {
     if (!selectedBatchesPtr || selectedBatchesPtr->empty()) {

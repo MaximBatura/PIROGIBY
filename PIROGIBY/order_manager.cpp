@@ -7,12 +7,12 @@
 #include "worker_manager.h"
 #include "menu_manager.h"
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 OrderManager::OrderManager(WorkersManager* workersManager, MenuManager* menuManager, ClientManager* clientManager, IngredientsManager* ingredientsManager)
     : workersManager(workersManager), menuManager(menuManager), clientManager(clientManager), ingredientsManager(ingredientsManager) {}
 
 
-// Простая функция для вывода времени
+// РџСЂРѕСЃС‚Р°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° РІСЂРµРјРµРЅРё
 std::ostream& operator<<(std::ostream& os, const std::tm& t) {
     char buffer[20];
     strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", &t);
@@ -33,20 +33,20 @@ void OrderManager::createNewOrder() {
     localtime_r(&now, &timeInfo);
 #endif
 
-    std::cout << "Введите номер телефона клиента (пример: 375291111111): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° РєР»РёРµРЅС‚Р° (РїСЂРёРјРµСЂ: 375291111111): ";
     std::string clientPhoneNumber = getUserString();
     Client* clientPtr = clientManager->findClientByPhoneNumber(clientPhoneNumber);
     if (clientPtr == nullptr) {
-        std::cout << "Клиент не найден в базе и будет создан как новый\n";
+        std::cout << "РљР»РёРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ РІ Р±Р°Р·Рµ Рё Р±СѓРґРµС‚ СЃРѕР·РґР°РЅ РєР°Рє РЅРѕРІС‹Р№\n";
         
-        // Добавление клиента
-        // Находим минимальный доступный ID
+        // Р”РѕР±Р°РІР»РµРЅРёРµ РєР»РёРµРЅС‚Р°
+        // РќР°С…РѕРґРёРј РјРёРЅРёРјР°Р»СЊРЅС‹Р№ РґРѕСЃС‚СѓРїРЅС‹Р№ ID
         int id = findNextAvailableId(clientManager->getClients());
 
-        std::cout << "Введите имя клиента: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РєР»РёРµРЅС‚Р°: ";
         std::string name = getUserString();
 
-        std::cout << "Введите скидку клиента (%): ";
+        std::cout << "Р’РІРµРґРёС‚Рµ СЃРєРёРґРєСѓ РєР»РёРµРЅС‚Р° (%): ";
         int discount = getUserChoice(0, 100);
 
         clientManager->addClient(id, name, clientPhoneNumber, discount);
@@ -55,18 +55,18 @@ void OrderManager::createNewOrder() {
     else {
         if (clientPtr->isInBlacklist()) {
             system("cls");
-            std::cout << "Клиент в черном списке. Создание заказа отменено.\n";
+            std::cout << "РљР»РёРµРЅС‚ РІ С‡РµСЂРЅРѕРј СЃРїРёСЃРєРµ. РЎРѕР·РґР°РЅРёРµ Р·Р°РєР°Р·Р° РѕС‚РјРµРЅРµРЅРѕ.\n";
             return;
         }
     }
 
     workersManager->displayAllWorkers();
-    std::cout << "Выбран клиент с именем " << clientPtr->getName() << ".\n";
-    std::cout << "Введите id работника, принявшего заказ: ";
+    std::cout << "Р’С‹Р±СЂР°РЅ РєР»РёРµРЅС‚ СЃ РёРјРµРЅРµРј " << clientPtr->getName() << ".\n";
+    std::cout << "Р’РІРµРґРёС‚Рµ id СЂР°Р±РѕС‚РЅРёРєР°, РїСЂРёРЅСЏРІС€РµРіРѕ Р·Р°РєР°Р·: ";
     int receivedByIndex = getId(workersManager->getWorkers());
     Worker* receivedBy = workersManager->findWorkerById(receivedByIndex);
 
-    // Выбор позиций меню
+    // Р’С‹Р±РѕСЂ РїРѕР·РёС†РёР№ РјРµРЅСЋ
     std::vector<const MenuItem*> items;
 
     bool cancel = false;
@@ -75,12 +75,12 @@ void OrderManager::createNewOrder() {
 
         bool choosen = false;
         while (!choosen) {
-            std::cout << "Введите id позиции меню или 'q' для выхода: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ id РїРѕР·РёС†РёРё РјРµРЅСЋ РёР»Рё 'q' РґР»СЏ РІС‹С…РѕРґР°: ";
             std::string input;
             std::getline(std::cin, input);
 
             if (input.length() > MAX_STRING_LENGTH) {
-                std::cout << "Максимальная длина строки - " << MAX_STRING_LENGTH << " символов. Повторите попытку.\n";
+                std::cout << "РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° СЃС‚СЂРѕРєРё - " << MAX_STRING_LENGTH << " СЃРёРјРІРѕР»РѕРІ. РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ.\n";
                 continue;
             }
 
@@ -94,12 +94,12 @@ void OrderManager::createNewOrder() {
                     items.push_back(menuManager->findMenuItemById(index));
                 }
                 else {
-                    std::cout << "Нет такого id. Попробуйте еще раз.\n";
+                    std::cout << "РќРµС‚ С‚Р°РєРѕРіРѕ id. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.\n";
                     continue;
                 }
             }
             else {
-                std::cout << "Некорректный ввод. Попробуйте снова.\n";
+                std::cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
                 continue;
             }
         }
@@ -117,7 +117,7 @@ void OrderManager::createNewOrder() {
                     while (a != 0) {
                         if (selectedBatchesPtr->size() == 0) {
                             system("cls");
-                            std::cout << "У вас недостаточно ингредиентов на складе для данного заказа\n";
+                            std::cout << "РЈ РІР°СЃ РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ РЅР° СЃРєР»Р°РґРµ РґР»СЏ РґР°РЅРЅРѕРіРѕ Р·Р°РєР°Р·Р°\n";
                             return;
                         }
                         Batch* btch = findNearestExpirationDate(selectedBatchesPtr);
@@ -153,9 +153,9 @@ void OrderManager::createNewOrder() {
                     //        a = 0;
                     //    }
                     //    else {
-                    //        a -= btch->getQuantity();  // Уменьшаем оставшееся количество
-                    //        btch->substractQuantity(btch->getQuantity());  // Полностью используем текущую партию
-                    //        selectedIng->removeZeroQuantityBatches();  // Удаляем использованную партию
+                    //        a -= btch->getQuantity();  // РЈРјРµРЅСЊС€Р°РµРј РѕСЃС‚Р°РІС€РµРµСЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ
+                    //        btch->substractQuantity(btch->getQuantity());  // РџРѕР»РЅРѕСЃС‚СЊСЋ РёСЃРїРѕР»СЊР·СѓРµРј С‚РµРєСѓС‰СѓСЋ РїР°СЂС‚РёСЋ
+                    //        selectedIng->removeZeroQuantityBatches();  // РЈРґР°Р»СЏРµРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅСѓСЋ РїР°СЂС‚РёСЋ
                     //    }
                     //}
                     while (a != 0 && !selectedBatchesPtr->empty()) {
@@ -166,15 +166,15 @@ void OrderManager::createNewOrder() {
                             a = 0;
                         }
                         else {
-                            a -= btch->getQuantity();  // Уменьшаем оставшееся количество
-                            btch->substractQuantity(btch->getQuantity());  // Полностью используем текущую партию
-                            selectedIng->removeZeroQuantityBatches();  // Удаляем использованную партию
+                            a -= btch->getQuantity();  // РЈРјРµРЅСЊС€Р°РµРј РѕСЃС‚Р°РІС€РµРµСЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ
+                            btch->substractQuantity(btch->getQuantity());  // РџРѕР»РЅРѕСЃС‚СЊСЋ РёСЃРїРѕР»СЊР·СѓРµРј С‚РµРєСѓС‰СѓСЋ РїР°СЂС‚РёСЋ
+                            selectedIng->removeZeroQuantityBatches();  // РЈРґР°Р»СЏРµРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅСѓСЋ РїР°СЂС‚РёСЋ
                         }
                     }
 
                     if (a != 0) {
                         system("cls");
-                        std::cout << "У вас недостаточно ингредиентов на складе для данного заказа\n";
+                        std::cout << "РЈ РІР°СЃ РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ РЅР° СЃРєР»Р°РґРµ РґР»СЏ РґР°РЅРЅРѕРіРѕ Р·Р°РєР°Р·Р°\n";
                         return;
                     }
 
@@ -184,7 +184,7 @@ void OrderManager::createNewOrder() {
         }
     }
 
-    // Создание нового заказа
+    // РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ Р·Р°РєР°Р·Р°
     Order newOrder(id, timeInfo, clientPhoneNumber);
     newOrder.setReceivedBy(receivedBy);
     for (auto item : items) {
@@ -206,19 +206,19 @@ void OrderManager::createNewOrder() {
     m_orders.push_back(newOrder);
     system("cls");
     receivedBy->addAcceptedOrders(1);
-    std::cout << "Новый заказ создан успешно!" << std::endl;
+    std::cout << "РќРѕРІС‹Р№ Р·Р°РєР°Р· СЃРѕР·РґР°РЅ СѓСЃРїРµС€РЅРѕ!" << std::endl;
 }
 
 void OrderManager::deleteOrder() {
     // system("cls");
     if (!canChange()) { return; }
-    std::cout << "Введите ID заказа для удаления: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ ID Р·Р°РєР°Р·Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ";
     int orderId = getId(m_orders);
 
     for (auto it = m_orders.begin(); it != m_orders.end(); ++it) {
         if (it->getId() == orderId) {
             m_orders.erase(it);
-            std::cout << "Заказ удален." << std::endl;
+            std::cout << "Р—Р°РєР°Р· СѓРґР°Р»РµРЅ." << std::endl;
             return;
         }
     }
@@ -226,33 +226,33 @@ void OrderManager::deleteOrder() {
 
 void OrderManager::updateOrder() {
     if (!canChange()) { return; }
-    std::cout << "Введите ID заказа для изменения: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ ID Р·Р°РєР°Р·Р° РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ: ";
     int orderId = getId(m_orders);
     for (auto& order : m_orders) {
         if (order.getId() == orderId) {
-            std::cout << "Изменение информации о заказе..." << std::endl;
+            std::cout << "РР·РјРµРЅРµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р·Р°РєР°Р·Рµ..." << std::endl;
 
-            std::cout << "Введите имя клиента: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РєР»РёРµРЅС‚Р°: ";
             std::string client = getUserString();
             order.setClient(client);
 
-            // Выбор работника, принявшего заказ
+            // Р’С‹Р±РѕСЂ СЂР°Р±РѕС‚РЅРёРєР°, РїСЂРёРЅСЏРІС€РµРіРѕ Р·Р°РєР°Р·
             workersManager->displayAllWorkers();
-            std::cout << "Введите id работника, принявшего заказ: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ id СЂР°Р±РѕС‚РЅРёРєР°, РїСЂРёРЅСЏРІС€РµРіРѕ Р·Р°РєР°Р·: ";
             int receivedByIndex = getId(workersManager->getWorkers());
             const Worker* receivedBy = workersManager->findWorkerById(receivedByIndex);
             order.setReceivedBy(receivedBy);
 
-            if (order.getStatus() == "Приготовлен") {
-                // Выбор работника, приготовившего заказ
+            if (order.getStatus() == "РџСЂРёРіРѕС‚РѕРІР»РµРЅ") {
+                // Р’С‹Р±РѕСЂ СЂР°Р±РѕС‚РЅРёРєР°, РїСЂРёРіРѕС‚РѕРІРёРІС€РµРіРѕ Р·Р°РєР°Р·
                 workersManager->displayAllWorkers();
-                std::cout << "Введите номер работника, приготовившего заказ:: ";
+                std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ СЂР°Р±РѕС‚РЅРёРєР°, РїСЂРёРіРѕС‚РѕРІРёРІС€РµРіРѕ Р·Р°РєР°Р·:: ";
                 int preparedByIndex = getId(workersManager->getWorkers());
                 const Worker* preparedBy = workersManager->findWorkerById(preparedByIndex);
                 order.setPreparedBy(preparedBy);
             }
 
-            // Выбор позиций меню
+            // Р’С‹Р±РѕСЂ РїРѕР·РёС†РёР№ РјРµРЅСЋ
             std::vector<const MenuItem*> items;
             bool cancel = false;
             while (!cancel) {
@@ -261,7 +261,7 @@ void OrderManager::updateOrder() {
 
                 while (!getChoice) {
 
-                    std::cout << "Введите id позиции меню или 'q' для выхода: ";
+                    std::cout << "Р’РІРµРґРёС‚Рµ id РїРѕР·РёС†РёРё РјРµРЅСЋ РёР»Рё 'q' РґР»СЏ РІС‹С…РѕРґР°: ";
                     std::string input = getUserString();
 
                     if (input == "q" or input == "Q") {
@@ -275,21 +275,21 @@ void OrderManager::updateOrder() {
                             items.push_back(menuManager->findMenuItemById(itemIndex));
                         }
                         else {
-                            std::cout << "Позиции меню с таким ID не найдено. Попробуйте снова.\n";
+                            std::cout << "РџРѕР·РёС†РёРё РјРµРЅСЋ СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅРѕ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.\n";
                             continue;
                         }
 
                     }
                     else {
                         clearInputBuffer();
-                        std::cout << "Некорректный ввод. Попробуйте снова\n";
+                        std::cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°\n";
                         continue;
                     }
                 }
             }
             order.setItems(items);
             system("cls");
-            std::cout << "Информация о заказе обновлена." << std::endl;
+            std::cout << "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р·Р°РєР°Р·Рµ РѕР±РЅРѕРІР»РµРЅР°." << std::endl;
             return;
         }
     }
@@ -297,73 +297,73 @@ void OrderManager::updateOrder() {
 
 void OrderManager::findOrderByAttribute() {
     if (!canChange()) { return; }
-    std::cout << "Поиск заказа по атрибуту..." << std::endl;
+    std::cout << "РџРѕРёСЃРє Р·Р°РєР°Р·Р° РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ..." << std::endl;
 
-    // Поиск по различным параметрам:
-    // ID, клиенту, работникам, позиции меню
+    // РџРѕРёСЃРє РїРѕ СЂР°Р·Р»РёС‡РЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј:
+    // ID, РєР»РёРµРЅС‚Сѓ, СЂР°Р±РѕС‚РЅРёРєР°Рј, РїРѕР·РёС†РёРё РјРµРЅСЋ
 
-    std::cout << "Выберите атрибут поиска (1-id, 2-клиент, 3-работник, 4-позиция меню): ";
+    std::cout << "Р’С‹Р±РµСЂРёС‚Рµ Р°С‚СЂРёР±СѓС‚ РїРѕРёСЃРєР° (1-id, 2-РєР»РёРµРЅС‚, 3-СЂР°Р±РѕС‚РЅРёРє, 4-РїРѕР·РёС†РёСЏ РјРµРЅСЋ): ";
     int atr_id = getUserChoice(1, 4);
 
     switch (atr_id) {
     case 1:
     {
-        // Поиск по ID
+        // РџРѕРёСЃРє РїРѕ ID
 
-        std::cout << "Введите id: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ id: ";
         int search_id = getId(m_orders);
-        // Очистка буфера ввода после ввода числа
+        // РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РІРІРѕРґР° РїРѕСЃР»Рµ РІРІРѕРґР° С‡РёСЃР»Р°
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         for (const auto& order : m_orders) {
             if (order.getId() == search_id) {
                 system("cls");
-                std::cout << "Заказ найден:" << std::endl;
+                std::cout << "Р—Р°РєР°Р· РЅР°Р№РґРµРЅ:" << std::endl;
                 printOrder(order);
                 return;
             }
         }
         system("cls");
-        std::cout << "Заказ не найден." << std::endl;
+        std::cout << "Р—Р°РєР°Р· РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
         break;
     }
-    case 2: // Поиск по Клиенту
+    case 2: // РџРѕРёСЃРє РїРѕ РљР»РёРµРЅС‚Сѓ
     {
-        std::cout << "Введите имя клиента: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РєР»РёРµРЅС‚Р°: ";
         std::string client = getUserString();
 
         for (const auto& order : m_orders) {
             if (order.getClient() == client) {
                 system("cls");
-                std::cout << "Заказ найден:" << std::endl;
+                std::cout << "Р—Р°РєР°Р· РЅР°Р№РґРµРЅ:" << std::endl;
                 printOrder(order);
                 return;
             }
         }
         system("cls");
-        std::cout << "Заказ не найден." << std::endl;
+        std::cout << "Р—Р°РєР°Р· РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
         break;
     }
-    case 3: // Поиск по Работнику, принявшему или приготовившему заказ
+    case 3: // РџРѕРёСЃРє РїРѕ Р Р°Р±РѕС‚РЅРёРєСѓ, РїСЂРёРЅСЏРІС€РµРјСѓ РёР»Рё РїСЂРёРіРѕС‚РѕРІРёРІС€РµРјСѓ Р·Р°РєР°Р·
     {
-        std::cout << "Введите имя работника: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ СЂР°Р±РѕС‚РЅРёРєР°: ";
         std::string worker = getUserString();
 
         for (const auto& order : m_orders) {
             if (order.getReceivedBy()->getName() == worker or order.getPreparedBy()->getName() == worker) {
                 system("cls");
-                std::cout << "Заказ найден:" << std::endl;
+                std::cout << "Р—Р°РєР°Р· РЅР°Р№РґРµРЅ:" << std::endl;
                 printOrder(order);
                 return;
             }
         }
         system("cls");
-        std::cout << "Заказ не найден." << std::endl;
+        std::cout << "Р—Р°РєР°Р· РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
         break;
     }
-    case 4: // Поиск по Позиции меню
+    case 4: // РџРѕРёСЃРє РїРѕ РџРѕР·РёС†РёРё РјРµРЅСЋ
     {
-        std::cout << "Введите наименование позиции: ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РЅР°РёРјРµРЅРѕРІР°РЅРёРµ РїРѕР·РёС†РёРё: ";
         std::string menuPosition = getUserString();
 
         for (const auto& order : m_orders) {
@@ -376,7 +376,7 @@ void OrderManager::findOrderByAttribute() {
             }
             if (found) {
                 system("cls");
-                std::cout << "Заказ найден:" << std::endl;
+                std::cout << "Р—Р°РєР°Р· РЅР°Р№РґРµРЅ:" << std::endl;
                 printOrder(order);
                 return;
             }
@@ -384,7 +384,7 @@ void OrderManager::findOrderByAttribute() {
         break;
     }
     default:
-        std::cerr << "Неверный тип атрибута!" << std::endl;
+        std::cerr << "РќРµРІРµСЂРЅС‹Р№ С‚РёРї Р°С‚СЂРёР±СѓС‚Р°!" << std::endl;
         break;
     }
 }
@@ -396,14 +396,14 @@ Order OrderManager::findOrderById(int id)
             return order;
         }
     }
-    std::cout << "Заказ не найден." << std::endl;
+    std::cout << "Р—Р°РєР°Р· РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
 }
 
 void OrderManager::viewOrdersHistory() {
     system("cls");
-    std::cout << "История заказов:" << std::endl;
+    std::cout << "РСЃС‚РѕСЂРёСЏ Р·Р°РєР°Р·РѕРІ:" << std::endl;
     if (m_orders.empty()) {
-        std::cout << "Нет активных заказов." << std::endl;
+        std::cout << "РќРµС‚ Р°РєС‚РёРІРЅС‹С… Р·Р°РєР°Р·РѕРІ." << std::endl;
         return;
     }
     for (auto order : m_orders) { printOrder(order); }
@@ -411,20 +411,20 @@ void OrderManager::viewOrdersHistory() {
 
 void OrderManager::printOrder(Order order) const {
     std::cout << "ID: " << order.getId();
-    std::cout << ", Статус: " << order.getStatus();
-    std::cout << ", Клиент: " << order.getClient();
-    std::cout << ", Сумма заказа до скидки: " << order.getAmountWithoutSale();
-    std::cout << ", Скидка: " << order.getDiscount();
-    std::cout << ", Сумма заказа после скидки: " << order.getAmountWithSale();
-    std::cout << ", Принял заказ: " << order.getReceivedBy()->getName();
-    std::cout << ", Время принятия: " << order.getReceivedTime();
+    std::cout << ", РЎС‚Р°С‚СѓСЃ: " << order.getStatus();
+    std::cout << ", РљР»РёРµРЅС‚: " << order.getClient();
+    std::cout << ", РЎСѓРјРјР° Р·Р°РєР°Р·Р° РґРѕ СЃРєРёРґРєРё: " << order.getAmountWithoutSale();
+    std::cout << ", РЎРєРёРґРєР°: " << order.getDiscount();
+    std::cout << ", РЎСѓРјРјР° Р·Р°РєР°Р·Р° РїРѕСЃР»Рµ СЃРєРёРґРєРё: " << order.getAmountWithSale();
+    std::cout << ", РџСЂРёРЅСЏР» Р·Р°РєР°Р·: " << order.getReceivedBy()->getName();
+    std::cout << ", Р’СЂРµРјСЏ РїСЂРёРЅСЏС‚РёСЏ: " << order.getReceivedTime();
 
-    if (order.getStatus() == "Приготовлен") {
-        std::cout << ", Приготовил: " << order.getPreparedBy()->getName()
-            << ", Время приготовления: " << order.getCookedTime();
+    if (order.getStatus() == "РџСЂРёРіРѕС‚РѕРІР»РµРЅ") {
+        std::cout << ", РџСЂРёРіРѕС‚РѕРІРёР»: " << order.getPreparedBy()->getName()
+            << ", Р’СЂРµРјСЏ РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ: " << order.getCookedTime();
     }
-    std::cout << ", Сумма ккалорий: " << order.getCalories();
-    std::cout << ", Позиции меню: ";
+    std::cout << ", РЎСѓРјРјР° РєРєР°Р»РѕСЂРёР№: " << order.getCalories();
+    std::cout << ", РџРѕР·РёС†РёРё РјРµРЅСЋ: ";
     for (auto item : order.getItems()) {
         std::cout << item->getName() << ", ";
     }
@@ -435,12 +435,12 @@ bool OrderManager::canChange()
 {
     if (menuManager->getMenuSize() == 0) {
         system("cls");
-        std::cout << "Действие недоступно, так как у вас нет ни одной позиции в меню.\n";
+        std::cout << "Р”РµР№СЃС‚РІРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ, С‚Р°Рє РєР°Рє Сѓ РІР°СЃ РЅРµС‚ РЅРё РѕРґРЅРѕР№ РїРѕР·РёС†РёРё РІ РјРµРЅСЋ.\n";
         return false;
     }
     else if (workersManager->getWorkersSize() == 0) {
         system("cls");
-        std::cout << "Действие недоступно, так как у вас нет ни одного работника.\n";
+        std::cout << "Р”РµР№СЃС‚РІРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ, С‚Р°Рє РєР°Рє Сѓ РІР°СЃ РЅРµС‚ РЅРё РѕРґРЅРѕРіРѕ СЂР°Р±РѕС‚РЅРёРєР°.\n";
         return false;
     }
     return true;
@@ -449,15 +449,15 @@ bool OrderManager::canChange()
 int ordersMenu(OrderManager& manager) {
     system("cls");
     while (true) {
-        std::cout << "--- Меню управления заказами ---\n";
-        std::cout << "1. Создать новый заказ\n";
-        std::cout << "2. Удалить созданный заказ\n";
-        std::cout << "3. Изменить информацию заказа\n";
-        std::cout << "4. Найти заказ по атрибуту\n";
-        std::cout << "5. Посмотреть историю заказов\n";
-        std::cout << "6. Вернуться в главное меню\n";
+        std::cout << "--- РњРµРЅСЋ СѓРїСЂР°РІР»РµРЅРёСЏ Р·Р°РєР°Р·Р°РјРё ---\n";
+        std::cout << "1. РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ Р·Р°РєР°Р·\n";
+        std::cout << "2. РЈРґР°Р»РёС‚СЊ СЃРѕР·РґР°РЅРЅС‹Р№ Р·Р°РєР°Р·\n";
+        std::cout << "3. РР·РјРµРЅРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Р·Р°РєР°Р·Р°\n";
+        std::cout << "4. РќР°Р№С‚Рё Р·Р°РєР°Р· РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ\n";
+        std::cout << "5. РџРѕСЃРјРѕС‚СЂРµС‚СЊ РёСЃС‚РѕСЂРёСЋ Р·Р°РєР°Р·РѕРІ\n";
+        std::cout << "6. Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n";
 
-        std::cout << "Выберите пункт: ";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РїСѓРЅРєС‚: ";
         int choice = getUserChoice(1, 6);
 
         switch (choice) {
@@ -479,7 +479,7 @@ int ordersMenu(OrderManager& manager) {
         case 6:
             return 0;
         default:
-            std::cout << "Неверный ввод. Попробуйте еще раз." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·." << std::endl;
             break;
         }
     }

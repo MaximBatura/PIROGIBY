@@ -16,23 +16,23 @@ void kitchenMenu(Kitchen kitchen) {
 }
 
 bool Kitchen::isValidInt(const std::string& str) {
-    // Проверяем, все ли символы в строке являются цифрами
+    // РџСЂРѕРІРµСЂСЏРµРј, РІСЃРµ Р»Рё СЃРёРјРІРѕР»С‹ РІ СЃС‚СЂРѕРєРµ СЏРІР»СЏСЋС‚СЃСЏ С†РёС„СЂР°РјРё
     return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
 }
 
 void Kitchen::printOrderCard(Order& order) {
 
-    if (order.getStatus() != "Принят") {
+    if (order.getStatus() != "РџСЂРёРЅСЏС‚") {
         return;
     }
 
-    // Верхняя часть рамки
+    // Р’РµСЂС…РЅСЏСЏ С‡Р°СЃС‚СЊ СЂР°РјРєРё
     for (int i = 0; i < cardWidth; ++i) {
         std::cout << "-";
     }
     std::cout << "\n";
 
-    // Информация внутри карточки
+    // РРЅС„РѕСЂРјР°С†РёСЏ РІРЅСѓС‚СЂРё РєР°СЂС‚РѕС‡РєРё
     std::cout << " ID: " << order.getId() << "\n";
 
     char timeBuffer[20];
@@ -49,7 +49,7 @@ void Kitchen::printOrderCard(Order& order) {
         std::cout << " No Items" << "\n";
     }
 
-    // Нижняя часть рамки
+    // РќРёР¶РЅСЏСЏ С‡Р°СЃС‚СЊ СЂР°РјРєРё
     for (int i = 0; i < cardWidth; ++i) {
         std::cout << "-";
     }
@@ -59,18 +59,18 @@ void Kitchen::printOrderCard(Order& order) {
 bool Kitchen::displayOrders(int pageNumber) {
     std::vector<Order>& allOrders = m_orderManager.getOrders();
 
-    // Создаем новый вектор, содержащий ссылки на заказы со статусом "Принят"
+    // РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РІРµРєС‚РѕСЂ, СЃРѕРґРµСЂР¶Р°С‰РёР№ СЃСЃС‹Р»РєРё РЅР° Р·Р°РєР°Р·С‹ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј "РџСЂРёРЅСЏС‚"
     std::vector<Order*> orders;
     for (auto& order : allOrders) {
-        if (order.getStatus() == "Принят") {
+        if (order.getStatus() == "РџСЂРёРЅСЏС‚") {
             orders.push_back(&order);
         }
     }
 
     if (orders.size() == 0) {
         system("cls");
-        std::cout << "Новых заказов нет.\n\n";
-        std::cout << "Введите q для выхода: ";
+        std::cout << "РќРѕРІС‹С… Р·Р°РєР°Р·РѕРІ РЅРµС‚.\n\n";
+        std::cout << "Р’РІРµРґРёС‚Рµ q РґР»СЏ РІС‹С…РѕРґР°: ";
         std::string input;
         std::getline(std::cin, input);
         if (input == "q") {
@@ -82,40 +82,40 @@ bool Kitchen::displayOrders(int pageNumber) {
         int startIndex = (pageNumber - 1) * perPage;
         int endIndex = std::min(startIndex + perPage, static_cast<int>(orders.size()));
 
-        // Очистить экран перед выводом новой страницы
+        // РћС‡РёСЃС‚РёС‚СЊ СЌРєСЂР°РЅ РїРµСЂРµРґ РІС‹РІРѕРґРѕРј РЅРѕРІРѕР№ СЃС‚СЂР°РЅРёС†С‹
         system("cls");
 
-        // Вывод карточек
+        // Р’С‹РІРѕРґ РєР°СЂС‚РѕС‡РµРє
         for (int i = startIndex; i < endIndex && i < static_cast<int>(orders.size()); ++i) {
             printOrderCard(*orders[i]);
         }
 
 
-        // Если остались заказы, добавить стрелку
+        // Р•СЃР»Рё РѕСЃС‚Р°Р»РёСЃСЊ Р·Р°РєР°Р·С‹, РґРѕР±Р°РІРёС‚СЊ СЃС‚СЂРµР»РєСѓ
         if (endIndex < static_cast<int>(orders.size())) {
-            std::cout << "Еще " << orders.size() - endIndex << " заказов (N)";
+            std::cout << "Р•С‰Рµ " << orders.size() - endIndex << " Р·Р°РєР°Р·РѕРІ (N)";
             std::cout << " ->\n";
         }
 
-        // Если есть предыдущие страницы, добавить стрелочку для возврата на предыдущую страницу
+        // Р•СЃР»Рё РµСЃС‚СЊ РїСЂРµРґС‹РґСѓС‰РёРµ СЃС‚СЂР°РЅРёС†С‹, РґРѕР±Р°РІРёС‚СЊ СЃС‚СЂРµР»РѕС‡РєСѓ РґР»СЏ РІРѕР·РІСЂР°С‚Р° РЅР° РїСЂРµРґС‹РґСѓС‰СѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
         if (pageNumber > 1) {
             std::cout << "<- ";
-            std::cout << "Еще " << (startIndex - perPage + 3) << " заказов (P)\n";
+            std::cout << "Р•С‰Рµ " << (startIndex - perPage + 3) << " Р·Р°РєР°Р·РѕРІ (P)\n";
         }
 
-        std::cout << "\nДля выхода введите q";
-        std::cout << "\nВведите ID заказа для отметки приготовления: ";
+        std::cout << "\nР”Р»СЏ РІС‹С…РѕРґР° РІРІРµРґРёС‚Рµ q";
+        std::cout << "\nР’РІРµРґРёС‚Рµ ID Р·Р°РєР°Р·Р° РґР»СЏ РѕС‚РјРµС‚РєРё РїСЂРёРіРѕС‚РѕРІР»РµРЅРёСЏ: ";
         std::string input = getUserString();
         // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (isValidInt(input)) {
             int orderId = stoi(input);
-            // Найти заказ по ID
+            // РќР°Р№С‚Рё Р·Р°РєР°Р· РїРѕ ID
             for (auto& order : allOrders) {
                 if (order.getId() == orderId) {
-                    if (order.getStatus() == "Принят") {
+                    if (order.getStatus() == "РџСЂРёРЅСЏС‚") {
                         m_workerManager.displayAllWorkers();
-                        std::cout << "Выберите сотрудника, приготовившего заказ: ";
+                        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ СЃРѕС‚СЂСѓРґРЅРёРєР°, РїСЂРёРіРѕС‚РѕРІРёРІС€РµРіРѕ Р·Р°РєР°Р·: ";
                         int choice = getId(m_workerManager.getWorkers());
                         Worker* cookedWorker = m_workerManager.findWorkerById(choice);
                         order.setPreparedBy(cookedWorker);
@@ -129,15 +129,15 @@ bool Kitchen::displayOrders(int pageNumber) {
                         localtime_r(&now, &timeInfo);
 #endif
                         order.setCookedTime(timeInfo);
-                        order.setStatus("Приготовлен");
+                        order.setStatus("РџСЂРёРіРѕС‚РѕРІР»РµРЅ");
                         break;
                     }
                     else {
-                        std::cout << "Заказ уже приготовлен\n";
+                        std::cout << "Р—Р°РєР°Р· СѓР¶Рµ РїСЂРёРіРѕС‚РѕРІР»РµРЅ\n";
                     }
                 }
             }
-            std::cout << "Заказа с таким номером нет. Попробуйте еще раз.\n";
+            std::cout << "Р—Р°РєР°Р·Р° СЃ С‚Р°РєРёРј РЅРѕРјРµСЂРѕРј РЅРµС‚. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.\n";
 
         }
         else if (input == "Q" || input == "q") {
@@ -149,7 +149,7 @@ bool Kitchen::displayOrders(int pageNumber) {
                 // displayOrders(pageNumber + 1);
             }
             else {
-                if (!displayOrders(1)) { return false; } // Переход на первую страницу
+                if (!displayOrders(1)) { return false; } // РџРµСЂРµС…РѕРґ РЅР° РїРµСЂРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
             }
         }
         else if (input == "P" || input == "p") {
@@ -158,11 +158,11 @@ bool Kitchen::displayOrders(int pageNumber) {
             }
             else {
                 if (!displayOrders(totalPages)) { return false; }
-                // displayOrders(totalPages); // Переход на последнюю страницу
+                // displayOrders(totalPages); // РџРµСЂРµС…РѕРґ РЅР° РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂР°РЅРёС†Сѓ
             }
         }
         // displayOrders(1);
-        if (!displayOrders(1)) { return false; } // Переход на первую страницу
+        if (!displayOrders(1)) { return false; } // РџРµСЂРµС…РѕРґ РЅР° РїРµСЂРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
     }
 }
 

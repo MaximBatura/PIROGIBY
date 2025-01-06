@@ -30,7 +30,7 @@ void MenuItem::updateIngredient(std::shared_ptr<Ingredient> ingredient, double n
 double MenuItem::calculateProtein() const {
     double totalProtein = 0.0;
     for (const auto& pair : composition) {
-        if (pair.first->getUnit() == "грамм") {
+        if (pair.first->getUnit() == "     ") {
             totalProtein += pair.first->getProtein() * pair.second / 100.0;
         }
         else {
@@ -44,7 +44,7 @@ double MenuItem::calculateProtein() const {
 double MenuItem::calculateFat() const {
     double totalFat = 0.0;
     for (auto& pair : composition) {
-        if (pair.first->getUnit() == "грамм") {
+        if (pair.first->getUnit() == "     ") {
             totalFat += pair.first->getFat() * pair.second / 100.0;
         }
         else {
@@ -58,7 +58,7 @@ double MenuItem::calculateFat() const {
 double MenuItem::calculateCarbs() const {
     double totalCarbs = 0.0;
     for (auto& pair : composition) {
-        if (pair.first->getUnit() == "грамм") {
+        if (pair.first->getUnit() == "     ") {
             totalCarbs += pair.first->getCarbs() * pair.second / 100.0;
         }
         else {
@@ -72,7 +72,7 @@ double MenuItem::calculateCarbs() const {
 double MenuItem::calculateCalories() const {
     double totalCalories = 0.0;
     for (auto& pair : composition) {
-        if (pair.first->getUnit() == "грамм") {
+        if (pair.first->getUnit() == "     ") {
             totalCalories += pair.first->getCalories() * pair.second / 100.0;
         }
         else {
@@ -83,10 +83,10 @@ double MenuItem::calculateCalories() const {
     return totalCalories;
 }
 
-// Функция для поиска ингредиента в составе
+//                                         
 bool MenuItem::isIngredientInComposition(const Ingredient& ingredient){
     for (const auto& pair : composition) {
-        if ((*pair.first).getId() == ingredient.getId()) { // Сравниваем сами объекты Ingredient
+        if ((*pair.first).getId() == ingredient.getId()) { //                         Ingredient
             return true;
         }
     }
@@ -96,27 +96,27 @@ bool MenuItem::isIngredientInComposition(const Ingredient& ingredient){
 
 void MenuManager::addNewPosition() {
 
-    // Находим минимальный доступный ID
+    //                               ID
     int itemID = findNextAvailableId(menuItems);
 
-    std::cout << "Введите название позиции: ";
+    std::cout << "                        : ";
     std::string itemName = getUserString();
 
     MenuItem* newItem = new MenuItem(itemID, itemName);
 
     if (ingredientsManager->getIngredients().size() == 0) {
-        std::cout << "У вас нет ни одного ингредиента в базе. Будет добавлена не составная позиция меню.\n";
+        std::cout << "                                      .                                          .\n";
 
-        std::cout << "Введите сколько грамм белка в данной позиции, если они есть: ";
+        std::cout << "                                            ,              : ";
         newItem->self_protein = getUserChoice(0, 100);
 
-        std::cout << "Введите сколько грамм жиров в данной позиции, если они есть: ";
+        std::cout << "                                            ,              : ";
         newItem->self_fat = getUserChoice(0, 100);
 
-        std::cout << "Введите сколько грамм углеводов в данной позиции, если они есть: ";
+        std::cout << "                                                ,              : ";
         newItem->self_carbs = getUserChoice(0, 100);
 
-        std::cout << "Введите сколько ккалорий в данной позиции, если они есть: ";
+        std::cout << "                                         ,              : ";
         newItem->self_calories = getUserChoice(0, 100);
     }
     else {
@@ -128,12 +128,12 @@ void MenuManager::addNewPosition() {
 
             bool choosen = false;
             while (!choosen) {
-                std::cout << "Введите id ингредиента или 'q' для выхода: ";
+                std::cout << "        id                 'q'           : ";
                 std::string input;
                 std::getline(std::cin, input);
 
                 if (input.length() > MAX_STRING_LENGTH) {
-                    std::cout << "Максимальная длина строки - " << MAX_STRING_LENGTH << " символов. Повторите попытку.\n";
+                    std::cout << "                          - " << MAX_STRING_LENGTH << "         .                  .\n";
                     continue;
                 }
                 
@@ -146,15 +146,15 @@ void MenuManager::addNewPosition() {
                     if (checkId(ingredientsManager->getIngredients(), index)) {
                         Ingredient selectedIngredient = ingredientsManager->getIngredientById(index);
                         if (newItem->isIngredientInComposition(selectedIngredient)) {
-                            std::cout << "Этот ингредиент уже добавлен\n";
+                            std::cout << "                            \n";
                             continue;
                         }
                         else {
-                            if (selectedIngredient.getUnit() == "грамм") {
-                                std::cout << "Введите количество грамм: ";
+                            if (selectedIngredient.getUnit() == "     ") {
+                                std::cout << "                        : ";
                             }
                             else {
-                                std::cout << "Введите количество штук: ";
+                                std::cout << "                       : ";
                             }
                             int grams;
                             std::cin >> grams;
@@ -167,62 +167,62 @@ void MenuManager::addNewPosition() {
                         }
                     }
                     else {
-                        std::cout << "Нет такого id. Попробуйте еще раз.\n";
+                        std::cout << "           id.                   .\n";
                         continue;
                     }
                 }
                 else {
-                    std::cout << "Некорректный ввод. Попробуйте снова.\n";
+                    std::cout << "                 .                 .\n";
                     continue;
                 }
             }
         }
     }
 
-    std::cout << "Введите цену позиции: ";
+    std::cout << "                    : ";
     int itemCost = getUserChoice(0, 1000000);
     newItem->setCost(itemCost);
 
     menuItems.push_back(newItem);
     system("cls");
-    std::cout << "Позиция успешно добавлена!\n";
+    std::cout << "                         !\n";
 }
 
 void MenuManager::deletePosition() {
     if (menuItems.empty()) {
-        std::cout << "Меню пусто.\n";
+        std::cout << "          .\n";
         return;
     }
 
-    std::cout << "Выберите позицию для удаления:\n";
+    std::cout << "                             :\n";
     for (size_t i = 0; i < menuItems.size(); ++i) {
         std::cout << menuItems[i]->getId() << ". " << menuItems[i]->getName() << "\n";
     }
     
     int id_to_delete = getId(menuItems);
     MenuItem* menuItem_to_delete = findMenuItemById(id_to_delete);
-    // Теперь находим итератор на элемент, соответствующий этому указателю
+    //                                   ,                                
     auto it = std::find(menuItems.begin(), menuItems.end(), menuItem_to_delete);
     menuItems.erase(it);
 
     system("cls");
-    std::cout << "Позиция удалена.\n";
+    std::cout << "               .\n";
 }
 
 
 void MenuManager::viewAllMenuPositions() {
     system("cls");
     if (menuItems.empty()) {
-        std::cout << "Меню пусто.\n";
+        std::cout << "          .\n";
         return;
     }
 
     for (size_t i = 0; i < menuItems.size(); ++i) {
         if (menuItems[i]->self_protein == 0) {
-            std::cout << "ID: " << menuItems[i]->getId() << ", Название: " << menuItems[i]->getName() << ", Белки: " << menuItems[i]->calculateProtein() << ", Жиры: " << menuItems[i]->calculateFat() << ", Углеводы: " << menuItems[i]->calculateCarbs() << ", Ккалории: " << menuItems[i]->calculateCalories() << ", Цена: " << menuItems[i]->getCost() << "\n";
+            std::cout << "ID: " << menuItems[i]->getId() << ",         : " << menuItems[i]->getName() << ",      : " << menuItems[i]->calculateProtein() << ",     : " << menuItems[i]->calculateFat() << ",         : " << menuItems[i]->calculateCarbs() << ",         : " << menuItems[i]->calculateCalories() << ",     : " << menuItems[i]->getCost() << "\n";
         }
         else {
-            std::cout << "ID: " << menuItems[i]->getId() << ", Название: " << menuItems[i]->getName() << ", Белки: " << menuItems[i]->self_protein << ", Жиры: " << menuItems[i]->self_fat << ", Углеводы: " << menuItems[i]->self_carbs << ", Ккалории: " << menuItems[i]->self_calories<< ", Цена: " << menuItems[i]->getCost() << "\n";
+            std::cout << "ID: " << menuItems[i]->getId() << ",         : " << menuItems[i]->getName() << ",      : " << menuItems[i]->self_protein << ",     : " << menuItems[i]->self_fat << ",         : " << menuItems[i]->self_carbs << ",         : " << menuItems[i]->self_calories<< ",     : " << menuItems[i]->getCost() << "\n";
         }
     }
 }
@@ -234,7 +234,7 @@ MenuItem* MenuManager::findMenuItemById(int id) const {
         }
     }
 
-    // Если элемент не найден, возвращаем nullptr
+    //                       ,            nullptr
     return nullptr;
 }
 
@@ -242,12 +242,12 @@ MenuItem* MenuManager::findMenuItemById(int id) const {
 void MenuMenu(MenuManager& manager) {
     system("cls");
     while (true) {
-        std::cout << "--- Меню: ---\n";
-        std::cout << "1. Добавить позицию\n";
-        std::cout << "2. Удалить позицию\n";
-        std::cout << "3. Посмотреть все позиции\n";
-        std::cout << "4. Вернуться в главное меню\n";
-        std::cout << "Выберите пункт: ";
+        std::cout << "---     : ---\n";
+        std::cout << "1.                 \n";
+        std::cout << "2.                \n";
+        std::cout << "3.                       \n";
+        std::cout << "4.                         \n";
+        std::cout << "              : ";
         int choice = getUserChoice(1, 4);
 
         switch (choice) {
@@ -263,7 +263,7 @@ void MenuMenu(MenuManager& manager) {
         case 4:
             return;
         default:
-            std::cerr << "Неверный выбор.\n";
+            std::cerr << "              .\n";
             break;
         }
     }

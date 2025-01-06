@@ -28,23 +28,23 @@ bool IngredientsManager::updateIngredient(int id, const Ingredient& updatedIngre
 
 void IngredientsManager::displayAllIngredients(std::vector<int> without_ids) const {
     if (ingredients.size() != 0 and ingredients.size() == without_ids.size()) {
-        std::cout << "Ингредиентов больше нет\n";
+        std::cout << "РРЅРіСЂРµРґРёРµРЅС‚РѕРІ Р±РѕР»СЊС€Рµ РЅРµС‚\n";
         return;
     }
     for (const auto& ingredient : ingredients) {
         auto it = std::find(without_ids.begin(), without_ids.end(), ingredient.getId());
 
-        // Проверяем, нашли ли мы число
+        // РџСЂРѕРІРµСЂСЏРµРј, РЅР°С€Р»Рё Р»Рё РјС‹ С‡РёСЃР»Рѕ
         if (it != without_ids.end()) {
             continue;
         }
         else {
             std::cout << "ID: " << ingredient.getId()
-                << ", Наименование: " << ingredient.getName()
-                << ", Белки: " << ingredient.getProtein()
-                << ", Жиры: " << ingredient.getFat()
-                << ", Углеводы: " << ingredient.getCarbs()
-                << ", Калории: " << ingredient.getCalories() << "\n";
+                << ", РќР°РёРјРµРЅРѕРІР°РЅРёРµ: " << ingredient.getName()
+                << ", Р‘РµР»РєРё: " << ingredient.getProtein()
+                << ", Р–РёСЂС‹: " << ingredient.getFat()
+                << ", РЈРіР»РµРІРѕРґС‹: " << ingredient.getCarbs()
+                << ", РљР°Р»РѕСЂРёРё: " << ingredient.getCalories() << "\n";
         } 
     }
 }
@@ -53,7 +53,7 @@ bool IngredientsManager::canChange() const
 {
     if (ingredients.size() == 0) {
         system("cls");
-        std::cout << "У вас нет ни одного ингредиента в базе.\n";
+        std::cout << "РЈ РІР°СЃ РЅРµС‚ РЅРё РѕРґРЅРѕРіРѕ РёРЅРіСЂРµРґРёРµРЅС‚Р° РІ Р±Р°Р·Рµ.\n";
         return false;
     }
 }
@@ -77,113 +77,113 @@ Ingredient* IngredientsManager::getIngredientPtrById(int id)
 }
 
 void Ingredient::removeZeroQuantityBatches() {
-    // Создаем временный вектор для хранения непустых партий
+    // РЎРѕР·РґР°РµРј РІСЂРµРјРµРЅРЅС‹Р№ РІРµРєС‚РѕСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РЅРµРїСѓСЃС‚С‹С… РїР°СЂС‚РёР№
     std::vector<Batch> nonEmptyBatches;
 
-    // Копируем все непустые партии в новый вектор
+    // РљРѕРїРёСЂСѓРµРј РІСЃРµ РЅРµРїСѓСЃС‚С‹Рµ РїР°СЂС‚РёРё РІ РЅРѕРІС‹Р№ РІРµРєС‚РѕСЂ
     for (auto& batch : batches) {
         if (batch.getQuantity() > 0) {
             nonEmptyBatches.push_back(batch);
         }
     }
 
-    // Заменяем старый список новым списком без пустых партий
+    // Р—Р°РјРµРЅСЏРµРј СЃС‚Р°СЂС‹Р№ СЃРїРёСЃРѕРє РЅРѕРІС‹Рј СЃРїРёСЃРєРѕРј Р±РµР· РїСѓСЃС‚С‹С… РїР°СЂС‚РёР№
     batches.swap(nonEmptyBatches);
 }
 
 void ingredientsMenu(IngredientsManager& manager) {
     system("cls");
     while (true) {
-        std::cout << "--- Справочник ингредиентов ---\n";
-        std::cout << "1. Добавить ингредиент\n";
-        std::cout << "2. Удалить ингредиент\n";
-        std::cout << "3. Изменить ингредиент\n";
-        std::cout << "4. Просмотреть все ингредиенты\n";
-        std::cout << "5. Вернуться в главное меню\n";
-        std::cout << "Выберите пункт: ";
+        std::cout << "--- РЎРїСЂР°РІРѕС‡РЅРёРє РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ ---\n";
+        std::cout << "1. Р”РѕР±Р°РІРёС‚СЊ РёРЅРіСЂРµРґРёРµРЅС‚\n";
+        std::cout << "2. РЈРґР°Р»РёС‚СЊ РёРЅРіСЂРµРґРёРµРЅС‚\n";
+        std::cout << "3. РР·РјРµРЅРёС‚СЊ РёРЅРіСЂРµРґРёРµРЅС‚\n";
+        std::cout << "4. РџСЂРѕСЃРјРѕС‚СЂРµС‚СЊ РІСЃРµ РёРЅРіСЂРµРґРёРµРЅС‚С‹\n";
+        std::cout << "5. Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РїСѓРЅРєС‚: ";
 
         int choice = getUserChoice(0, 5);
 
         switch (choice) {
         case 1: {
-            // Находим минимальный доступный ID
+            // РќР°С…РѕРґРёРј РјРёРЅРёРјР°Р»СЊРЅС‹Р№ РґРѕСЃС‚СѓРїРЅС‹Р№ ID
             int id = findNextAvailableId(manager.getIngredients());
 
-            std::cout << "Укажите единицы измерения (грамм - 1, штук - 2): ";
+            std::cout << "РЈРєР°Р¶РёС‚Рµ РµРґРёРЅРёС†С‹ РёР·РјРµСЂРµРЅРёСЏ (РіСЂР°РјРј - 1, С€С‚СѓРє - 2): ";
             int choice = getUserChoice(1, 2);
             std::string unit;
             if (choice == 1) {
-                unit = "грамм";
+                unit = "РіСЂР°РјРј";
             }
             else {
-                unit = "штук";
+                unit = "С€С‚СѓРє";
             }
 
-            std::cout << "Введите наименование ингредиента: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅР°РёРјРµРЅРѕРІР°РЅРёРµ РёРЅРіСЂРµРґРёРµРЅС‚Р°: ";
             std::string name = getUserString();
-            std::cout << "Введите содержание белков на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ СЃРѕРґРµСЂР¶Р°РЅРёРµ Р±РµР»РєРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int protein = getUserChoice(0, 100);
-            std::cout << "Введите содержание жиров на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ СЃРѕРґРµСЂР¶Р°РЅРёРµ Р¶РёСЂРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int fat = getUserChoice(0, 100);
-            std::cout << "Введите содержание углеводов на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ СЃРѕРґРµСЂР¶Р°РЅРёРµ СѓРіР»РµРІРѕРґРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int carbs = getUserChoice(0, 100);
-            std::cout << "Введите количество калорий на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєР°Р»РѕСЂРёР№ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int calories = getUserChoice(0, 100000);
 
             Ingredient newIngredient(id, name, unit, protein, fat, carbs, calories);
             manager.addIngredient(newIngredient);
             system("cls");
-            std::cout << "Ингредиент успешно добавлен!" << std::endl;
+            std::cout << "РРЅРіСЂРµРґРёРµРЅС‚ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!" << std::endl;
             break;
         }
         case 2: {
             if (!manager.canChange()) { break; }
-            std::cout << "Введите ID ингредиента для удаления: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ ID РёРЅРіСЂРµРґРёРµРЅС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ";
             int id = getId(manager.getIngredients());
 
             system("cls");
             if (manager.removeIngredient(id)) {
-                std::cout << "Ингредиент удален!" << std::endl;
+                std::cout << "РРЅРіСЂРµРґРёРµРЅС‚ СѓРґР°Р»РµРЅ!" << std::endl;
             }
             else {
-                std::cout << "Ингредиент с таким ID не найден!" << std::endl;
+                std::cout << "РРЅРіСЂРµРґРёРµРЅС‚ СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅ!" << std::endl;
             }
             break;
         }
         case 3: {
             if (!manager.canChange()) { break; }
 
-            std::cout << "Введите ID ингредиента для изменения: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ ID РёРЅРіСЂРµРґРёРµРЅС‚Р° РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ: ";
             int id = getId(manager.getIngredients());
 
-            std::cout << "Введите новое наименование ингредиента: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РЅР°РёРјРµРЅРѕРІР°РЅРёРµ РёРЅРіСЂРµРґРёРµРЅС‚Р°: ";
             std::string name = getUserString();
-            std::cout << "Укажите единицы измерения (грамм - 1, штук - 2): ";
+            std::cout << "РЈРєР°Р¶РёС‚Рµ РµРґРёРЅРёС†С‹ РёР·РјРµСЂРµРЅРёСЏ (РіСЂР°РјРј - 1, С€С‚СѓРє - 2): ";
             int choice = getUserChoice(1, 2);
             std::string unit;
             if (choice == 1) {
-                unit = "грамм";
+                unit = "РіСЂР°РјРј";
             }
             else {
-                unit = "штук";
+                unit = "С€С‚СѓРє";
             }
-            std::cout << "Введите новое содержание белков на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ СЃРѕРґРµСЂР¶Р°РЅРёРµ Р±РµР»РєРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int protein = getUserChoice(0, 100);
-            std::cout << "Введите новое содержание жиров на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ СЃРѕРґРµСЂР¶Р°РЅРёРµ Р¶РёСЂРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int fat = getUserChoice(0, 100);
-            std::cout << "Введите новое содержание углеводов на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ СЃРѕРґРµСЂР¶Р°РЅРёРµ СѓРіР»РµРІРѕРґРѕРІ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int carbs = getUserChoice(0, 100);
-            std::cout << "Введите новое количество калорий на 100 г / штуку продукта: ";
+            std::cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєР°Р»РѕСЂРёР№ РЅР° 100 Рі / С€С‚СѓРєСѓ РїСЂРѕРґСѓРєС‚Р°: ";
             int calories = getUserChoice(0, 100000);
 
             Ingredient updatedIngredient(id, unit, name, protein, fat, carbs, calories);
 
             system("cls");
             if (manager.updateIngredient(id, updatedIngredient)) {
-                std::cout << "Ингредиент успешно изменен!" << std::endl;
+                std::cout << "РРЅРіСЂРµРґРёРµРЅС‚ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅ!" << std::endl;
             }
             else {
-                std::cout << "Ингредиент с таким ID не найден!" << std::endl;
+                std::cout << "РРЅРіСЂРµРґРёРµРЅС‚ СЃ С‚Р°РєРёРј ID РЅРµ РЅР°Р№РґРµРЅ!" << std::endl;
             }
             break;
         }
@@ -195,7 +195,7 @@ void ingredientsMenu(IngredientsManager& manager) {
         case 5:
             return;
         default:
-            std::cout << "Неверный выбор. Попробуйте снова." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << std::endl;
         }
     }
 }
